@@ -12,7 +12,6 @@ private:
     T *arr;
 
 public:
-
     stacks(int a)
     {
         size = a;
@@ -64,7 +63,7 @@ public:
     T peek()
     {
         if (isempty())
-            return T();
+            return T();  // return -1;
 
         return arr[top];
     }
@@ -78,15 +77,14 @@ bool isValid(char str[], int n)
     {
         char ch = str[i];
 
-        
         if (ch == '(' || ch == '{' || ch == '[')
         {
             s.push(ch);
         }
-        
+
         else if (ch == ')' || ch == '}' || ch == ']')
         {
-            if (s.isempty()) 
+            if (s.isempty())
                 return false;
 
             char temp = s.pop();
@@ -111,7 +109,7 @@ int main()
     char str[100];
 
     cout << "Enter a string: ";
-    cin >> str;
+    cin >> str;// getline(cin, str);  // for storing the whole line
 
     if (isValid(str, strlen(str)))
         cout << "Valid String";

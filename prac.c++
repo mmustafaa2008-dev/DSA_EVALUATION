@@ -1,7 +1,9 @@
 #include <iostream>
 #include <cstring>
 using namespace std;
+
 template <class T>
+
 class stacks
 {
 private:
@@ -75,32 +77,33 @@ public:
 
 int postfix(char arr[], int a)
 {
-    stacks<int> s(15);
+    stacks<int> s(a);// we use the stack of integer data type
     char temp;
     int result;
-    for(int i=0;i<a;i++)
+    for (int i = 0; i < a; i++)
     {
-        if(arr[i] >= '0' && arr[i] <= '9')
+        if (arr[i] >= '0' && arr[i] <= '9')
         {
             s.push(arr[i] - '0');
         }
-        else 
+        else
         {
             char op = arr[i];
             temp = s.pop();
-            if( op == '+')
+            // char ntemp = s.pop();
+            if (op == '+')
             {
                 result = s.pop() + temp;
             }
-            else if( op == '-')
+            else if (op == '-')
             {
                 result = s.pop() - temp;
             }
-            else if( op == '*')
+            else if (op == '*')
             {
                 result = s.pop() * temp;
             }
-            else if( op == '/')
+            else if (op == '/')
             {
                 result = s.pop() / temp;
             }
@@ -115,31 +118,31 @@ int prefix(char arr[], int a)
     stacks<int> s(20);
     char temp;
     int result;
-    for(int i=a-1;i>= 0;i--)
+    for (int i = a - 1; i >= 0; i--)
     {
-        if(arr[i] >= '0' && arr[i] <= '9')
+        if (arr[i] >= '0' && arr[i] <= '9')
         {
             s.push(arr[i] - '0');
         }
-        else 
+        else
         {
             char op = arr[i];
             temp = s.pop();
-            if( op == '+')
+            if (op == '+')
             {
-                result = temp + s.pop()  ;
+                result = temp + s.pop();
             }
-            else if( op == '-')
+            else if (op == '-')
             {
-                result = temp - s.pop()  ;
+                result = temp - s.pop();
             }
-            else if( op == '*')
+            else if (op == '*')
             {
-                result = temp * s.pop()  ;
+                result = temp * s.pop();
             }
-            else if( op == '/')
+            else if (op == '/')
             {
-                result = temp / s.pop()  ;
+                result = temp / s.pop();
             }
             s.push(result);
         }
@@ -148,45 +151,45 @@ int prefix(char arr[], int a)
 }
 int precedence(char arr)
 {
-    if(arr == '*' || arr == '/')
-    return 2;
-    else if(arr == '+' || arr == '-')
-    return 1;
+    if (arr == '*' || arr == '/')
+        return 2;
+    else if (arr == '+' || arr == '-')
+        return 1;
 
     return 0;
 }
 void infixtopost(char arr[], int a)
 {
-    stacks<char>s(10);
-    char sa[100];
-    int j=0;
+    stacks<char> s(10);
+    char sa[100]; // for showing the text of the postfix
+    int j = 0;
     for (int i = 0; i < a; i++)
     {
-        if((arr[i] >= 'a' && arr[i] <= 'z') || (arr[i] >= 'A' && arr[i] <= 'Z'))
+        if ((arr[i] >= 'a' && arr[i] <= 'z') || (arr[i] >= 'A' && arr[i] <= 'Z'))
         {
             sa[j++] = arr[i];
         }
-        else 
+        else
         {
             char op;
             op = arr[i];
-            if(op == '(')
+            if (op == '(')
             {
                 s.push(op);
             }
-            else if(op == ')')
+            else if (op == ')')
             {
-                while (!s.isempty() && s.peek()!= '(')
+                while (!s.isempty() && s.peek() != '(')
                 {
                     sa[j++] = s.pop();
                 }
-                if(!s.isempty() && s.peek()== '(')
+                if (!s.isempty() && s.peek() == '(')
                 {
                     s.pop();
                 }
             }
-            else if(op == '+' || op == '-' || op == '*' || op == '/')
-            { 
+            else if (op == '+' || op == '-' || op == '*' || op == '/')
+            {
                 while (!s.isempty() && precedence(s.peek()) >= precedence(op))
                 {
                     sa[j++] = s.pop();
@@ -195,16 +198,15 @@ void infixtopost(char arr[], int a)
             }
         }
     }
-    while(!s.isempty())
+    while (!s.isempty())
     {
         sa[j++] = s.pop();
     }
     sa[j] = '\0';
-    for(int i=0;i<strlen(sa);i++)
+    for (int i = 0; i < strlen(sa); i++)
     {
         cout << sa[i];
     }
-    
 }
 
 int main()
@@ -219,6 +221,6 @@ int main()
     // cout << result;
     char exp2[] = "(A+B)*(C-D)";
     int size = strlen(exp2);
-    infixtopost(exp2,size);
+    infixtopost(exp2, size);
     return 0;
 }
